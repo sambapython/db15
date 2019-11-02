@@ -1,0 +1,49 @@
+1. create a project DataCenter, create an app "system".
+
+req:  http://127.0.0.1:8000/get_temp/  
+respone: 27.56 
+req:  http://127.0.0.1:8000/get_availablespace/  
+respone: 20PB
+req:  http://127.0.0.1:8000/get_numberofCPUS/  
+respone: 4CORES
+Note: dont hard code values in the views, write a code to take the information from your computer
+
+2.create a project ERP 
+	app1: sales
+	app2: pur
+	app3: stock
+	app4: accounting
+create index.html template in all apps 
+req:  http://127.0.0.1:8000/sales/index/  it should read sales app index.html
+req:  http://127.0.0.1:8000/pur/index/  it should read pur app index.html
+req:  http://127.0.0.1:8000/stock/index/  it should read stock app index.html
+req:  http://127.0.0.1:8000/accounting/index/  it should read accounting app index.html
+
+3.create a project ERP 
+	app1: sales
+	app2: pur
+	app3: stock
+	app4: accounting
+create atleast two models for app and do migrations and migrate. Fill the data into tables 
+using shell. every table should contains atleast five records
+4.create a project ERP 
+	app1: sales
+	app2: pur
+	app3: stock
+	app4: accounting
+create atleast two models for each app makenure that it is covering all the
+relations(foreignkey,OneToOne,ManyToMany,). Maintain atleast one abstract for app. 
+and do migrations and migrate. Fill the data into tables 
+using shell. every table should contains atleast five records. Use OneToOne relation and 
+inheritace models. Maintain the user TRACK and datetime track
+
+5. develop three products menus
+	product_raw(develop CRUD without using django forms, generic views)
+	product_form(develop CRUD by using django forms wihtout using generic views)
+	product_generic(develop CRUD by using generic views)
+6. develop rest services(post, put, delete, get) for prodcut without using rest_framework.serializers
+
+7. develop rest services(post, put, delete, get) for prodcut by using rest_framework.serializers
+
+8. while deleting the product category its deleting the record from database. but requirement is that it should not delte record from database it should only change the status. In  the list view of product category it should show the product categories which has status true.
+9. upload the images of products and show it in the front end. Make sure that the image upload working fine with product update and delete. Once the record is deleted from the database, you need to delete the media files attached to it.
