@@ -1,0 +1,12 @@
+{% extends "gram/index.html"%}
+
+{% block content %}
+<form method="post">
+	{% csrf_token %}
+	<!-- Current location: <input type="text" name="name"><br>
+	Latitude: <input type="text" name="latitude"><br>
+	Longitude: <input type="text" name="longitude"><br> -->
+	{{ form.as_p }}
+	<input type="submit" name="" value="submit">
+</form>
+{% endblock %}

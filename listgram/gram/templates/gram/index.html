@@ -25,6 +25,7 @@
   
 <div class="container" style="margin-top:80px">
   <div class="row">
+    {% block content %}
     <div class="col-md-4">
       <a href="/signin" type="button" class="btn btn-primary btn-lg">SIGN IN</a>
     </div>
@@ -34,7 +35,7 @@
     <div class="col-md-4">
       <a href="/gram" type="button" class="btn btn-primary btn-lg">GO GRAM</a>
     </div>
-    
+    {% endblock %}
   </div>
   
 </body>

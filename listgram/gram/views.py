@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from gram.models import Location
+from gram.forms import LocationForm
 
 # Create your views here.
 from django.http import HttpResponse
@@ -13,4 +15,18 @@ def fun(request):
 	return render(request, "gram/index.html")
 
 def gram_view(request):
-	return render(request, "gram/index.html")
+	if request.method=="POST":
+		data = request.POST
+		'''
+		loc = Location(name=data.get("current_location"),
+			latitude=data.get("latitude"),
+			longitude=data.get("logitude"))
+		loc.save()
+		'''
+		data._mutable=True
+		data.pop("csrfmiddlewaretoken")
+		loc=Location(**data)
+		loc.save()
+	else:
+		form = LocationForm()
+	return render(request, "gram/gram.html",{"form":form})
