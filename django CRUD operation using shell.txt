@@ -1,0 +1,398 @@
+T effect the model in to database structure need to execute these two commands from 
+your project folder.
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+
+Go with the below shell statments to do CRUD operations.
+python manage.py shell
+Python 3.7.3 (default, Mar 27 2019, 22:11:17) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.6.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from gram.models import Person                                                          
+
+In [2]: jay=Person(name="jayaram",email="jay@gmail.com",age=3,phone="9676622023")               
+
+In [3]: jay.save()                                                                              
+
+In [4]: veda=Person(name="vedhanvesh",email="vedha@gmail.com",age=2,phone="9676622024")         
+
+In [5]: veda.save()                                                                             
+
+In [6]: sai=Person(name="sailaxmi",email="sai@gmail.com",age=30,phone="9676622025")             
+
+In [7]: sai.save()                                                                              
+
+In [8]: Person.objects.all()                                                                    
+Out[8]: <QuerySet [<Person: Person object (1)>, <Person: Person object (2)>, <Person: Person object (3)>]>
+
+In [9]: Person.objects.filter(age=30)                                                           
+Out[9]: <QuerySet [<Person: Person object (3)>]>
+
+In [10]: Person.objects.filter(age=3)                                                           
+Out[10]: <QuerySet [<Person: Person object (1)>]>
+
+In [11]: Person.objects.filter(name="jayaram")                                                  
+Out[11]: <QuerySet [<Person: Person object (1)>]>
+
+In [12]: Person.objects.filter(age>=2)                                                          
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-12-1b29f2ecbf39> in <module>
+----> 1 Person.objects.filter(age>=2)
+
+NameError: name 'age' is not defined
+
+In [13]: Person.objects.filter(age ge 2)                                                        
+  File "<ipython-input-13-69f65627bfe0>", line 1
+    Person.objects.filter(age ge 2)
+                               ^
+SyntaxError: invalid syntax
+
+
+In [14]: Person.objects.filter(age__level__gte=2)                                               
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-14-082a7443beb4> in <module>
+----> 1 Person.objects.filter(age__level__gte=2)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in filter(self, *args, **kwargs)
+    834         set.
+    835         """
+--> 836         return self._filter_or_exclude(False, *args, **kwargs)
+    837 
+    838     def exclude(self, *args, **kwargs):
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in _filter_or_exclude(self, negate, *args, **kwargs)
+    852             clone.query.add_q(~Q(*args, **kwargs))
+    853         else:
+--> 854             clone.query.add_q(Q(*args, **kwargs))
+    855         return clone
+    856 
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in add_q(self, q_object)
+   1250         # So, demotion is OK.
+   1251         existing_inner = {a for a in self.alias_map if self.alias_map[a].join_type == INNER}
+-> 1252         clause, _ = self._add_q(q_object, self.used_aliases)
+   1253         if clause:
+   1254             self.where.add(clause, AND)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in _add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq)
+   1274                     child, can_reuse=used_aliases, branch_negated=branch_negated,
+   1275                     current_negated=current_negated, allow_joins=allow_joins,
+-> 1276                     split_subq=split_subq,
+   1277                 )
+   1278                 joinpromoter.add_votes(needed_inner)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, reuse_with_filtered_relation)
+   1212             col = targets[0].get_col(alias, join_info.final_field)
+   1213 
+-> 1214         condition = self.build_lookup(lookups, col, value)
+   1215         lookup_type = condition.lookup_name
+   1216         clause.add(condition, AND)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in build_lookup(self, lookups, lhs, rhs)
+   1067 
+   1068         for name in lookups[:-1]:
+-> 1069             lhs = self.try_transform(lhs, name)
+   1070         # First try get_lookup() so that the lookup takes precedence if the lhs
+   1071         # supports both transform and lookup for the name.
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in try_transform(self, lhs, name)
+   1112                 "Unsupported lookup '%s' for %s or join on the field not "
+   1113                 "permitted." %
+-> 1114                 (name, lhs.output_field.__class__.__name__))
+   1115 
+   1116     def build_filter(self, filter_expr, branch_negated=False, current_negated=False,
+
+FieldError: Unsupported lookup 'level' for IntegerField or join on the field not permitted.
+
+In [15]: Person.objects.filter(age__gte=2)                                                      
+Out[15]: <QuerySet [<Person: Person object (1)>, <Person: Person object (2)>, <Person: Person object (3)>]>
+
+In [16]: Person.objects.filter(age__lte=20)                                                     
+Out[16]: <QuerySet [<Person: Person object (1)>, <Person: Person object (2)>]>
+
+In [17]: Person.objects.get(id=1)                                                               
+Out[17]: <Person: Person object (1)>
+
+In [18]: Person.objects.get(id=2)                                                               
+Out[18]: <Person: Person object (2)>
+
+In [19]: Person.objects.get(id=3)                                                               
+Out[19]: <Person: Person object (3)>
+
+In [20]: Person.objects.filter(age__gte=40)                                                     
+Out[20]: <QuerySet []>
+
+In [21]: Person.objects.get(age__gte=40)                                                        
+---------------------------------------------------------------------------
+DoesNotExist                              Traceback (most recent call last)
+<ipython-input-21-f6a351783e48> in <module>
+----> 1 Person.objects.get(age__gte=40)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in get(self, *args, **kwargs)
+    401             raise self.model.DoesNotExist(
+    402                 "%s matching query does not exist." %
+--> 403                 self.model._meta.object_name
+    404             )
+    405         raise self.model.MultipleObjectsReturned(
+
+DoesNotExist: Person matching query does not exist.
+
+In [22]: Person.objects.get(age=30)                                                             
+Out[22]: <Person: Person object (3)>
+
+In [23]: Person.objects.get(age__gte=1)                                                         
+---------------------------------------------------------------------------
+MultipleObjectsReturned                   Traceback (most recent call last)
+<ipython-input-23-2b722df4a938> in <module>
+----> 1 Person.objects.get(age__gte=1)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in get(self, *args, **kwargs)
+    405         raise self.model.MultipleObjectsReturned(
+    406             "get() returned more than one %s -- it returned %s!" %
+--> 407             (self.model._meta.object_name, num)
+    408         )
+    409 
+
+MultipleObjectsReturned: get() returned more than one Person -- it returned 3!
+
+In [24]: Person.objects.filter(age__gte=40)                                                     
+Out[24]: <QuerySet []>
+
+In [25]: Person.objects.filter(age__gte=100)                                                    
+Out[25]: <QuerySet []>
+
+In [26]: Person.objects.get(id=3)                                                               
+Out[26]: <Person: Person object (3)>
+
+In [27]: sai = Person.objects.get(id=3)                                                         
+
+In [28]: print(sai.name)                                                                        
+sailaxmi
+
+In [29]: sai.age                                                                                
+Out[29]: 30
+
+In [30]: sai.email                                                                              
+Out[30]: 'sai@gmail.com'
+
+In [31]: sai.name="SAILXMI"                                                                     
+
+In [32]: sai.save()                                                                             
+
+In [33]: sai.delete()                                                                           
+Out[33]: (1, {'gram.Person': 1})
+
+In [34]: sai = Person.objects.filter(name__in="a")                                              
+
+In [35]: sai                                                                                    
+Out[35]: <QuerySet []>
+
+In [36]: sai = Person.objects.filter(name__like="a")                                            
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-36-962b340d4afa> in <module>
+----> 1 sai = Person.objects.filter(name__like="a")
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in filter(self, *args, **kwargs)
+    834         set.
+    835         """
+--> 836         return self._filter_or_exclude(False, *args, **kwargs)
+    837 
+    838     def exclude(self, *args, **kwargs):
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in _filter_or_exclude(self, negate, *args, **kwargs)
+    852             clone.query.add_q(~Q(*args, **kwargs))
+    853         else:
+--> 854             clone.query.add_q(Q(*args, **kwargs))
+    855         return clone
+    856 
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in add_q(self, q_object)
+   1250         # So, demotion is OK.
+   1251         existing_inner = {a for a in self.alias_map if self.alias_map[a].join_type == INNER}
+-> 1252         clause, _ = self._add_q(q_object, self.used_aliases)
+   1253         if clause:
+   1254             self.where.add(clause, AND)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in _add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq)
+   1274                     child, can_reuse=used_aliases, branch_negated=branch_negated,
+   1275                     current_negated=current_negated, allow_joins=allow_joins,
+-> 1276                     split_subq=split_subq,
+   1277                 )
+   1278                 joinpromoter.add_votes(needed_inner)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, reuse_with_filtered_relation)
+   1212             col = targets[0].get_col(alias, join_info.final_field)
+   1213 
+-> 1214         condition = self.build_lookup(lookups, col, value)
+   1215         lookup_type = condition.lookup_name
+   1216         clause.add(condition, AND)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in build_lookup(self, lookups, lhs, rhs)
+   1076             # A lookup wasn't found. Try to interpret the name as a transform
+   1077             # and do an Exact lookup against it.
+-> 1078             lhs = self.try_transform(lhs, lookups[-1])
+   1079             lookup_class = lhs.get_lookup('exact')
+   1080 
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in try_transform(self, lhs, name)
+   1112                 "Unsupported lookup '%s' for %s or join on the field not "
+   1113                 "permitted." %
+-> 1114                 (name, lhs.output_field.__class__.__name__))
+   1115 
+   1116     def build_filter(self, filter_expr, branch_negated=False, current_negated=False,
+
+FieldError: Unsupported lookup 'like' for CharField or join on the field not permitted.
+
+In [37]: sai = Person.objects.filter(name__isin="a")                                            
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+<ipython-input-37-d6c56b048dbd> in <module>
+----> 1 sai = Person.objects.filter(name__isin="a")
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in filter(self, *args, **kwargs)
+    834         set.
+    835         """
+--> 836         return self._filter_or_exclude(False, *args, **kwargs)
+    837 
+    838     def exclude(self, *args, **kwargs):
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/query.py in _filter_or_exclude(self, negate, *args, **kwargs)
+    852             clone.query.add_q(~Q(*args, **kwargs))
+    853         else:
+--> 854             clone.query.add_q(Q(*args, **kwargs))
+    855         return clone
+    856 
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in add_q(self, q_object)
+   1250         # So, demotion is OK.
+   1251         existing_inner = {a for a in self.alias_map if self.alias_map[a].join_type == INNER}
+-> 1252         clause, _ = self._add_q(q_object, self.used_aliases)
+   1253         if clause:
+   1254             self.where.add(clause, AND)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in _add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq)
+   1274                     child, can_reuse=used_aliases, branch_negated=branch_negated,
+   1275                     current_negated=current_negated, allow_joins=allow_joins,
+-> 1276                     split_subq=split_subq,
+   1277                 )
+   1278                 joinpromoter.add_votes(needed_inner)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, reuse_with_filtered_relation)
+   1212             col = targets[0].get_col(alias, join_info.final_field)
+   1213 
+-> 1214         condition = self.build_lookup(lookups, col, value)
+   1215         lookup_type = condition.lookup_name
+   1216         clause.add(condition, AND)
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in build_lookup(self, lookups, lhs, rhs)
+   1076             # A lookup wasn't found. Try to interpret the name as a transform
+   1077             # and do an Exact lookup against it.
+-> 1078             lhs = self.try_transform(lhs, lookups[-1])
+   1079             lookup_class = lhs.get_lookup('exact')
+   1080 
+
+~/anaconda3/lib/python3.7/site-packages/django/db/models/sql/query.py in try_transform(self, lhs, name)
+   1112                 "Unsupported lookup '%s' for %s or join on the field not "
+   1113                 "permitted." %
+-> 1114                 (name, lhs.output_field.__class__.__name__))
+   1115 
+   1116     def build_filter(self, filter_expr, branch_negated=False, current_negated=False,
+
+FieldError: Unsupported lookup 'isin' for CharField or join on the field not permitted.
+
+In [38]: sai = Person.objects.filter(name__in="a")                                              
+
+In [39]: print(sai)                                                                             
+<QuerySet []>
+
+In [40]: sai = Person.objects.filter(age__lte=40)                                               
+
+In [41]: print(sai)                                                                             
+<QuerySet [<Person: Person object (1)>, <Person: Person object (2)>]>
+
+In [42]: sai[0]                                                                                 
+Out[42]: <Person: Person object (1)>
+
+In [43]: sai[1]                                                                                 
+Out[43]: <Person: Person object (2)>
+
+In [44]: for i in sai: 
+    ...:     print(i.name) 
+    ...:                                                                                        
+jayaram
+vedhanvesh
+
+In [45]: sai = Person.objects.filter(id=3)                                                      
+
+In [46]: print(sai)                                                                             
+<QuerySet []>
+
+In [47]: sai = Person.objects.filter(id=2)                                                      
+
+In [48]: print(sai)                                                                             
+<QuerySet [<Person: Person object (2)>]>
+
+In [49]: sai[0]                                                                                 
+Out[49]: <Person: Person object (2)>
+
+In [50]: if sai: 
+    ...:     obj=sai[0] 
+    ...: else: 
+    ...:     print("record not found") 
+    ...:                                                                                        
+
+In [51]: obj                                                                                    
+Out[51]: <Person: Person object (2)>
+
+In [52]: sai = Person.objects.filter(id=20)                                                     
+
+In [53]: if sai: 
+    ...:     obj=sai[0] 
+    ...: else: 
+    ...:     print("record not found") 
+    ...:                                                                                        
+record not found
+
+In [54]:                                                                                        

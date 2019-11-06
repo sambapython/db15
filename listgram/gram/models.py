@@ -11,3 +11,14 @@ class Location(models.Model):
 	name=models.CharField(max_length=250)
 	latitude = models.CharField(max_length=20)
 	longitude=models.CharField(max_length=20)
+class Product(models.Model):
+	name=models.CharField(max_length=250)
+class Store(models.Model):
+	name = models.CharField(max_length=250)
+	latitude = models.CharField(max_length=250)
+	longitude = models.CharField(max_length=250)
+	products = models.ManyToManyField(Product)
+class Gram(models.Model):
+	description = models.CharField(max_length=250) # optional field default="my shoping"
+	current_location = models.ForeignKey(Location, on_delete=models.PROTECT) #CASCADE
+	stores=models.ManyToManyField(Store)

@@ -1,0 +1,47 @@
+from gram.models import Location,Store, Gram                                            
+
+In [2]: amp = Location(name="ameerpet",latitude=1.2,longitude=5.6)                              
+
+In [3]: amp.save()   
+cell = Product(name="MI")
+cell.save() 
+In [10]: wallmart=Store(name="wallmart", latitude=2.3,longitude=5.7)                            
+
+In [11]: wallmart.save()                                                                        
+
+In [12]: wallmart.products.add(cell)                                                            
+
+In [13]: toy = Product(name="talking tommy")                                                    
+
+In [14]: toy.save()                                                                             
+
+In [15]: wallmart.products.add(toy)                                                             
+
+In [16]: atores = Store.objects.all()                                                           
+
+In [17]: stores = Store.objects.all()                                                           
+
+In [18]: [i for i in stores]                                                                    
+Out[18]: [<Store: Store object (1)>]
+
+In [19]: [i.products for i in stores]                                                           
+Out[19]: [<django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager at 0x7f2548a8f748>]
+
+In [20]: [i.products.all() for i in stores]                                                     
+Out[20]: [<QuerySet [<Product: Product object (1)>, <Product: Product object (2)>]>]
+
+In [21]: g = Gram(description="planing to buy cell and toy",current_location=amp)               
+
+In [22]: g.save()                                                                               
+
+In [23]: gram.stores.add(wallmart)                                                              
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-23-8362fa4c8779> in <module>
+----> 1 gram.stores.add(wallmart)
+
+NameError: name 'gram' is not defined
+
+In [24]: g.stores.add(wallmart)                                                                 
+
+In [25]:                                                                                        
