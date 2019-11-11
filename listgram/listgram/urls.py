@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from gram.views import fun, gram_view
+from gram.views import fun, gram_view, signup_view, signin_view, signout_view
 from app1.views import app1_view
 '''
 from django.http import HttpResponse
@@ -26,7 +26,10 @@ def fun(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', fun),
-    path("app1",app1_view),
-    path("gram",gram_view),
+    path("app1/",app1_view),
+    path("gram/",gram_view),
     # path("signup/",signup_view)
+    path("signup/",signup_view),
+    path("signin/",signin_view),
+    path("signout/",signout_view)
 ]

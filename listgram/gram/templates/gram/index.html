@@ -17,7 +17,11 @@
       <a class="navbar-brand" href="#">LIST GRAM</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
+      <li><a href="/">Home</a></li>
+       {% if request.user.is_authenticated %}
+        <li><a href="/signout">signout</a></li>
+        <li><a href="/">welcome: {{ request.user.username}}</a></li>
+      {% endif %}
       
     </ul>
   </div>

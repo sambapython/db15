@@ -1,0 +1,40 @@
+python manage.py shell
+Python 3.7.3 (default, Mar 27 2019, 22:11:17) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.6.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from django.contrib.auth.models import User                                             
+
+In [2]: user = User(username="user1",password="user1")                                          
+
+In [3]: user.save()                                                                             
+
+In [4]: user = User.objects.create_user(username="user2",password="user2")                      
+
+In [5]: user                                                                                    
+Out[5]: <User: user2>
+
+In [6]: User.objects.filter(username="user2",password="user2")                                  
+Out[6]: <QuerySet []>
+
+In [7]: from django.contrib.auth import authenticate                                            
+
+In [8]: user = authenticate(username="user2", password="user2")                                 
+
+In [9]: print(user)                                                                             
+user2
+
+In [10]: user = authenticate(username="user1", password="user1")                                
+
+In [11]: print(user1)                                                                           
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-11-e6e0f388e22f> in <module>
+----> 1 print(user1)
+
+NameError: name 'user1' is not defined
+
+In [12]: print(user)                                                                            
+None
+
+In [13]:                                                                                        

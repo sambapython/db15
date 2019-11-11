@@ -1,9 +1,40 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from gram.models import Location, Gram, Store, Product
 from gram.forms import LocationForm, StoreForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate,login,logout
 
-# Create your views here.
+
 from django.http import HttpResponse
+def signout_view(request):
+	logout(request)
+	return redirect("/")
+def signin_view(request):
+	msg = ""
+	if request.method == "POST":
+		data = request.POST 
+		user = authenticate(username=data.get("username"),
+			password=data.get("password"))
+		login(request,user)
+		if user:
+			msg="login successfully"
+			return redirect("/gram")
+		else:
+			msg="Authentication Failed"
+	form = AuthenticationForm()
+	return render(request,"gram/signin.html",{"form":form,"msg":msg})
+def signup_view(request):
+	msg=""
+	if request.method == "POST":
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			msg="User Registered successfully!!"
+		else:
+			msg=form._errors
+	else:
+		form = UserCreationForm()
+	return render(request,"gram/signup.html",{"form":form,"msg":msg})
 def fun(request):
 	"""
 	res='''
@@ -27,6 +58,7 @@ def gram_view(request):
 				latitude=data.get("latitude"),
 				longitude=data.get("longitude"))
 			store.save()
+			import pdb;pdb.set_trace()
 			for product_id in data.get("products"):
 			     product = Product.objects.get(id=product_id)
 			     store.products.add(product)
