@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from gram.views import fun, gram_view, signup_view, signin_view, signout_view
+from django.urls import path, re_path
+from gram.views import fun, gram_view, signup_view, signin_view, signout_view,\
+findpath_view
 from app1.views import app1_view
 '''
 from django.http import HttpResponse
@@ -31,5 +32,6 @@ urlpatterns = [
     # path("signup/",signup_view)
     path("signup/",signup_view),
     path("signin/",signin_view),
-    path("signout/",signout_view)
+    path("signout/",signout_view),
+    re_path("findpath/(?P<pk>[0-9]+)",findpath_view),#findpath_view(request,pk=)
 ]

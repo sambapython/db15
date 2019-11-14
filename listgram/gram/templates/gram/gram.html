@@ -23,8 +23,8 @@
 		{% endfor %}
 		{{store_form.as_table}}
 	    <input type="submit"  value="ADD STORE" name="addstore">
-
-	    <input type="submit"  value="FIND PATH" name="findpath">
+	    <a href="/findpath/{{gram.id}}">FINDPATH</a>
+	    <!-- <input type="submit"  value="FIND PATH" name="findpath"> -->
 	{% else %}
 	{{ current_location_form.as_table }} 
 	<input type="submit"  value="ADD LOCATION" name="addlocation"><br>

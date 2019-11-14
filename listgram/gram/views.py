@@ -5,7 +5,24 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 
 
+
 from django.http import HttpResponse
+def findpath_view(request,pk):
+	gram = Gram.objects.get(id=pk)
+	current_location = gram.current_location 
+	stores = gram.stores.all()
+	cl_lat,cl_longi =  current_location.latitude, current_location.longitude
+	stor_lat_long = [{"id":store.id,
+	"lat":store.latitude,
+	"long":store.longitude} for store in stores]
+	print(cl_lat,cl_longi,stor_lat_long)
+	#return HttpResponse("sdfs")
+
+	'''
+	write a logic to find the shortest path
+	'''
+	return render(request,"gram/path.html",{"gram":gram})
+
 def signout_view(request):
 	logout(request)
 	return redirect("/")
@@ -15,8 +32,9 @@ def signin_view(request):
 		data = request.POST 
 		user = authenticate(username=data.get("username"),
 			password=data.get("password"))
-		login(request,user)
+		
 		if user:
+			login(request,user)
 			msg="login successfully"
 			return redirect("/gram")
 		else:
@@ -52,13 +70,15 @@ def gram_view(request):
 		
 		data = request.POST
 		gram = Gram.objects.get(id=data.get("gramid"))
+
+		
 		
 		if "addstore" in data:
 			store = Store(name=data.get("name"),
 				latitude=data.get("latitude"),
 				longitude=data.get("longitude"))
 			store.save()
-			import pdb;pdb.set_trace()
+			
 			for product_id in data.get("products"):
 			     product = Product.objects.get(id=product_id)
 			     store.products.add(product)
