@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, re_path
 from gram.views import fun, gram_view, signup_view, signin_view, signout_view,\
 findpath_view
-from app1.views import app1_view
+from django.views.generic import TemplateView
+#from app1.views import app1_view
 '''
 from django.http import HttpResponse
 def fun(request):
@@ -27,11 +28,13 @@ def fun(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', fun),
-    path("app1/",app1_view),
+    #path("app1/",app1_view),
     path("gram/",gram_view),
     # path("signup/",signup_view)
     path("signup/",signup_view),
     path("signin/",signin_view),
     path("signout/",signout_view),
     re_path("findpath/(?P<pk>[0-9]+)",findpath_view),#findpath_view(request,pk=)
+    path("products/",TemplateView.as_view(
+        template_name="gram/products.html"))
 ]

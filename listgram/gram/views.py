@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from gram.models import Location, Gram, Store, Product
-from gram.forms import LocationForm, StoreForm
+from gram.forms import LocationForm, StoreForm, UserProfileForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.views import login_required
 
 
 
 from django.http import HttpResponse
+
+@login_required
 def findpath_view(request,pk):
 	gram = Gram.objects.get(id=pk)
 	current_location = gram.current_location 
@@ -23,6 +26,7 @@ def findpath_view(request,pk):
 	'''
 	return render(request,"gram/path.html",{"gram":gram})
 
+@login_required
 def signout_view(request):
 	logout(request)
 	return redirect("/")
@@ -44,14 +48,17 @@ def signin_view(request):
 def signup_view(request):
 	msg=""
 	if request.method == "POST":
-		form = UserCreationForm(request.POST)
+		form = UserProfileForm(request.POST)
 		if form.is_valid():
 			form.save()
+			user=form.instance
+			user.set_password(user.password)
+			user.save()
 			msg="User Registered successfully!!"
 		else:
 			msg=form._errors
 	else:
-		form = UserCreationForm()
+		form = UserProfileForm()
 	return render(request,"gram/signup.html",{"form":form,"msg":msg})
 def fun(request):
 	"""
@@ -62,7 +69,7 @@ def fun(request):
 	#return HttpResponse("hello")
 	#return HttpResponse(res)
 	return render(request, "gram/index.html")
-
+@login_required
 def gram_view(request):
 	store_form = StoreForm()
 	current_location_form = LocationForm()
@@ -76,7 +83,8 @@ def gram_view(request):
 		if "addstore" in data:
 			store = Store(name=data.get("name"),
 				latitude=data.get("latitude"),
-				longitude=data.get("longitude"))
+				longitude=data.get("longitude"),
+				user=request.user)
 			store.save()
 			
 			for product_id in data.get("products"):
@@ -86,12 +94,13 @@ def gram_view(request):
 		elif "addlocation" in data:
 			loc=Location(name=data.get("name"),
 				latitude=data.get("latitude"),
-				longitude=data.get("longitude"))
+				longitude=data.get("longitude"),
+				user=request.user)
 			loc.save()
 			gram.current_location = loc 
 			gram.save()
 	else:
-		gram = Gram(description="add description")
+		gram = Gram(description="add description",user=request.user)
 		gram.save()
 	return render(request, "gram/gram.html",
 		{"current_location_form":current_location_form,
