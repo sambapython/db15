@@ -17,7 +17,9 @@ from django.contrib import admin
 from django.urls import path, re_path
 from gram.views import fun, gram_view, signup_view, signin_view, signout_view,\
 findpath_view
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView,CreateView, UpdateView, DeleteView
+from gram.models import Product
+from gram.products import ProductTemplateView
 #from app1.views import app1_view
 '''
 from django.http import HttpResponse
@@ -35,6 +37,23 @@ urlpatterns = [
     path("signin/",signin_view),
     path("signout/",signout_view),
     re_path("findpath/(?P<pk>[0-9]+)",findpath_view),#findpath_view(request,pk=)
-    path("products/",TemplateView.as_view(
-        template_name="gram/products.html"))
+    path("products/",ProductTemplateView.as_view(
+        template_name="gram/products.html"),
+
+    ),
+    path("create_product/",CreateView.as_view(
+        model = Product,
+        fields = ["name"],
+        success_url="/products",
+        #template_name="gram/createproduct.html"
+        )),
+    re_path("update_product/(?P<pk>[0-9]+)",UpdateView.as_view(
+        model = Product,
+        fields = ["name"],
+        success_url="/products",
+        )),
+    re_path("delete_product/(?P<pk>[0-9]+)",DeleteView.as_view(
+        model = Product,
+        success_url="/products",
+        )),
 ]

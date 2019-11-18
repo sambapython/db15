@@ -28,7 +28,8 @@ class Location(NameAbstract):
 	user = models.ForeignKey(UserProfile, on_delete=models.PROTECT)
 class Product(NameAbstract):
 	#name=models.CharField(max_length=250)
-	user = models.ForeignKey(UserProfile, on_delete=models.PROTECT)
+	user = models.ForeignKey(UserProfile, on_delete=models.PROTECT,
+		blank=True, null=True)
 
 	def __str__(self):
 		return self.name

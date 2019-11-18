@@ -1,4 +1,24 @@
 {% extends "gram/index.html"%}
 {% block content %}
 <h1>PRODUCTS</h1>
+<p>{{name}}</p>
+<a href="/create_product">create product</a>
+<table>
+	<thead>
+		<tr>
+			<th>NAME</th>
+			<th>Operations</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for product in products %}
+		<tr>
+			<td>{{ product.name}}</td>
+			<td><a href="/update_product/{{product.id}}">Update||</a><a href="/delete_product/{{product.id}}">Delete</a></td>
+
+		</tr>
+		
+		{% endfor %}
+	</tbody>
+</table>
 {% endblock %}
