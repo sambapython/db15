@@ -48,7 +48,7 @@ def signin_view(request):
 def signup_view(request):
 	msg=""
 	if request.method == "POST":
-		form = UserProfileForm(request.POST)
+		form = UserProfileForm(request.POST, files=request.FILES)
 		if form.is_valid():
 			form.save()
 			user=form.instance

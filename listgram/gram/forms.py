@@ -6,7 +6,7 @@ from django import forms
 class UserProfileForm(ModelForm):
 	class Meta:
 		model=UserProfile
-		fields = ["username","password","phone"]
+		fields = ["username","password","phone","pic"]
 class LocationForm(ModelForm):
 	class Meta:
 		model=Location
