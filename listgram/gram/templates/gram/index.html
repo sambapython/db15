@@ -20,6 +20,7 @@
       <li><a href="/">Home</a></li>
        {% if request.user.is_authenticated %}
        <li><a href="/products">Products</a></li>
+       <li><a href="/gram">Gram</a></li>
         <li><a href="/signout">signout</a></li>
         <li><a href="/">welcome: {{ request.user.username}}</a></li>
       {% endif %}

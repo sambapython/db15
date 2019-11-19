@@ -19,7 +19,10 @@ from gram.views import fun, gram_view, signup_view, signin_view, signout_view,\
 findpath_view
 from django.views.generic import TemplateView,CreateView, UpdateView, DeleteView
 from gram.models import Product
-from gram.products import ProductTemplateView
+from gram.products import ProductTemplateView, ProductCreateView
+from django.conf import settings
+from django.conf.urls.static import static
+
 #from app1.views import app1_view
 '''
 from django.http import HttpResponse
@@ -41,15 +44,15 @@ urlpatterns = [
         template_name="gram/products.html"),
 
     ),
-    path("create_product/",CreateView.as_view(
+    path("create_product/",ProductCreateView.as_view(
         model = Product,
-        fields = ["name"],
+        fields = ["name","pic"],
         success_url="/products",
         #template_name="gram/createproduct.html"
         )),
     re_path("update_product/(?P<pk>[0-9]+)",UpdateView.as_view(
         model = Product,
-        fields = ["name"],
+        fields = ["name","pic"],
         success_url="/products",
         )),
     re_path("delete_product/(?P<pk>[0-9]+)",DeleteView.as_view(
@@ -57,3 +60,6 @@ urlpatterns = [
         success_url="/products",
         )),
 ]
+
+
+urlpatterns = urlpatterns+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
