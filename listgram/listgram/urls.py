@@ -34,7 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', fun),
     #path("app1/",app1_view),
-    path("gram/",gram_view),
+    path("gram/",gram_view), #ErrorMiddleWare(gram_view)
     # path("signup/",signup_view)
     path("signup/",signup_view),
     path("signin/",signin_view),

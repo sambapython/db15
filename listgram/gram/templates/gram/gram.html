@@ -1,6 +1,7 @@
 {% extends "gram/index.html"%}
 
 {% block content %}
+<button onclick="getlocation()">Get Current Location</button>
 <form method="post">
 	{% csrf_token %}
 	<input type="hidden" name="gramid" value="{{ gram.id }}">
