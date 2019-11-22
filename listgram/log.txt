@@ -1,0 +1,6 @@
+2019-11-22 02:52:02,801->INFO->signup view started->gram.views
+2019-11-22 02:52:02,801->INFO->created empty user form->gram.views
+2019-11-22 02:52:27,143->INFO->signup view started->gram.views
+2019-11-22 02:52:27,175->ERROR-><ul class="errorlist"><li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li></ul>->gram.views
+2019-11-22 02:54:41,562->INFO->signup view started->gram.views
+2019-11-22 02:54:41,563->INFO->created empty user form->gram.views

@@ -1,0 +1,19 @@
+{% extends "gram/index.html" %}
+
+{% block content %}
+<table>
+		<thead>
+			<tr>
+				<th>NAME</th>CREATED<th>PIC</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{object.name}}</td>{{ object.user.username }}<td>
+					<img src="/media/{{object.pic}}" width=30 height=30>
+				</td>
+			</tr>
+		</tbody>
+</table>
+
+{% endblock %}

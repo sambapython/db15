@@ -8,6 +8,8 @@ from django.contrib.auth.views import login_required
 
 
 from django.http import HttpResponse
+import logging
+logger = logging.getLogger(__name__)
 
 @login_required
 def findpath_view(request,pk):
@@ -46,19 +48,24 @@ def signin_view(request):
 	form = AuthenticationForm()
 	return render(request,"gram/signin.html",{"form":form,"msg":msg})
 def signup_view(request):
+	logger.info("signup view started")
 	msg=""
 	if request.method == "POST":
 		form = UserProfileForm(request.POST, files=request.FILES)
 		if form.is_valid():
 			form.save()
+			logger.info("user created")
 			user=form.instance
 			user.set_password(user.password)
+			logger.info("password encrypted")
 			user.save()
 			msg="User Registered successfully!!"
 		else:
 			msg=form._errors
+			logger.error(msg)
 	else:
 		form = UserProfileForm()
+		logger.info("created empty user form")
 	return render(request,"gram/signup.html",{"form":form,"msg":msg})
 def fun(request):
 	"""

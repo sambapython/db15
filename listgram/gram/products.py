@@ -1,6 +1,15 @@
 # product views
+from django.core.cache import cache
+from django.shortcuts import render
 from django.views.generic import TemplateView, DeleteView, CreateView
 from gram.models import Product
+def productdetailview(request,pk):
+	key = "%s_%s"%("Product",pk)
+	product = cache.get(key)
+	if not product:
+		product = Product.objects.get(id=pk)
+		cache.set(key,product)
+	return render(request,"gram/product_detail.html",{"object":product})
 class ProductTemplateView(TemplateView):
 	def get_context_data(self, **kwargs):
 		data = TemplateView.get_context_data(self,**kwargs)

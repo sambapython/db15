@@ -1,0 +1,4 @@
+python manage.py createcachetable tablename
+from django.core.cache import cache
+cache.set(key,value)
+cache.get(key)

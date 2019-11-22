@@ -14,7 +14,7 @@
 	<tbody>
 		{% for product in products %}
 		<tr>
-			<td>{{ product.name}}</td>
+			<td><a href="/products/{{product.id}}">{{ product.name}}</a></td>
 			<td><img src="/media/{{product.pic}}" alt="NO IMAGE" width=30 height=30></td>
 			<td><a href="/update_product/{{product.id}}">Update||</a><a href="/delete_product/{{product.id}}">Delete</a></td>
 

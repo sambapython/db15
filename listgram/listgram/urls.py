@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, re_path
 from gram.views import fun, gram_view, signup_view, signin_view, signout_view,\
 findpath_view
-from django.views.generic import TemplateView,CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView,CreateView, UpdateView, DeleteView,\
+DetailView
 from gram.models import Product
-from gram.products import ProductTemplateView, ProductCreateView
+from gram.products import ProductTemplateView, ProductCreateView, productdetailview
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -44,6 +45,12 @@ urlpatterns = [
         template_name="gram/products.html"),
 
     ),
+    #re_path("products/(?P<pk>[0-9]+)/",DetailView.as_view(
+    #    model=Product
+    #    ),
+
+    #),
+    re_path("products/(?P<pk>[0-9]+)/",productdetailview),
     path("create_product/",ProductCreateView.as_view(
         model = Product,
         fields = ["name","pic"],
