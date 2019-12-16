@@ -4,3 +4,20 @@
 2019-11-22 02:52:27,175->ERROR-><ul class="errorlist"><li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li></ul>->gram.views
 2019-11-22 02:54:41,562->INFO->signup view started->gram.views
 2019-11-22 02:54:41,563->INFO->created empty user form->gram.views
+2019-12-16 16:54:36,625->INFO->signup view started->gram.views
+2019-12-16 16:54:36,653->INFO->created empty user form->gram.views
+2019-12-16 16:55:11,427->INFO->signup view started->gram.views
+2019-12-16 16:55:11,681->INFO->user created->gram.views
+2019-12-16 16:55:12,005->INFO->password encrypted->gram.views
+2019-12-16 17:02:36,137->INFO->signup view started->gram.views
+2019-12-16 17:02:36,138->INFO->created empty user form->gram.views
+2019-12-16 17:02:43,255->INFO->signup view started->gram.views
+2019-12-16 17:02:43,401->INFO->user created->gram.views
+2019-12-16 17:02:43,720->INFO->password encrypted->gram.views
+2019-12-16 17:02:55,608->INFO->signup view started->gram.views
+2019-12-16 17:02:55,637->ERROR-><ul class="errorlist"><li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li></ul>->gram.views
+2019-12-16 17:05:02,034->INFO->signup view started->gram.views
+2019-12-16 17:05:02,035->INFO->created empty user form->gram.views
+2019-12-16 17:05:10,102->INFO->signup view started->gram.views
+2019-12-16 17:05:10,201->INFO->user created->gram.views
+2019-12-16 17:05:10,490->INFO->password encrypted->gram.views

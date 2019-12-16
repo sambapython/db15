@@ -20,7 +20,10 @@
     <ul class="nav navbar-nav">
       <li><a href="/">Home</a></li>
        {% if request.user.is_authenticated %}
+       {% if request.user.role == "admin" %}
        <li><a href="/products">Products</a></li>
+       <li><a href="/roles">ROLES</a></li>
+       {% endif %}
        <li><a href="/gram">Gram</a></li>
         <li><a href="/signout">signout</a></li>
         <li><a href="/">welcome: {{ request.user.username}}</a></li>

@@ -5,6 +5,9 @@ from django.contrib.auth.models import AbstractUser
 class UserProfile(AbstractUser):
 	phone = models.CharField(max_length=15, blank=True, null=True)
 	pic = models.ImageField(blank=True,null=True)
+	role = models.CharField(choices=[("admin","admin"),("user","user")], 
+		max_length=250,
+		default="user")
 
 
 # Create your models here.
@@ -53,6 +56,7 @@ class Gram(models.Model):
 
 	def __str__(self):
 		return self.current_location
+
 
 
 '''
